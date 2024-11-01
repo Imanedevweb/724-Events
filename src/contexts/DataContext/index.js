@@ -26,10 +26,16 @@ export const DataProvider = ({ children }) => {
       setError(err);
     }
   }, []);
-  useEffect(() => {
-    if (data) return;
-    getData();
-  });
+   // Récupérer le dernier événement en fonction de la date
+  const lastEvent = data?.events?.sort((evtA, evtB) => 
+    new Date(evtB.date) - new Date(evtA.date)
+  )[0] || null;
+
+   useEffect(() => {
+    if (!data) {
+      getData();
+    }
+  }, [data, getData]);
   
   return (
     <DataContext.Provider
@@ -37,6 +43,7 @@ export const DataProvider = ({ children }) => {
       value={{
         data,
         error,
+        lastEvent, // Ajout de lastEvent
       }}
     >
       {children}

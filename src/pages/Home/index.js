@@ -116,17 +116,18 @@ const Page = () => {
     <footer data-testid ="footer-testid" className="row">
       <div className="col presta" data-testid="last-event">
         <h3>Notre derniére prestation</h3>
-                {/* Vérifie si 'lastEvent' existe et que 'lastEvent.cover' et 'lastEvent.title' sont définis */}
-        {lastEvent && lastEvent.cover && lastEvent.title ?(
-        <EventCard
-          imageSrc={lastEvent.cover}
-          title={lastEvent.title}
-          date={new Date(lastEvent.date)}
-          small
-          label="boom"
+        {lastEvent && lastEvent.cover && lastEvent.title ?(  // Vérifie si lastEvent existe et que ses propriétés cover et title sont définie
+          <EventCard
+            imageSrc={lastEvent?.cover}
+            imageAlt={lastEvent?.description}
+            title={lastEvent?.title}
+            date={new Date(lastEvent?.date)}
+            small // Utilise un style adapté pour afficher en vignette
+            label={lastEvent.type}
         />
-                // Si l'une des conditions précédentes n'est pas satisfaite, ne rend rien (null)
-        ) : null}
+        ) : (
+          <p>Aucun prestation récente disponible</p>
+        )}
       </div>
       <div className="col contact">
         <h3>Contactez-nous</h3>
